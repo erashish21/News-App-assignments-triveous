@@ -1,14 +1,18 @@
 "use client";
-import Link from 'next/link';
+import Header from './components/Header';
 
-const HomePage = () => {
+
+const Home = () => {
   return (
     <div>
-      <h1>Welcome to My News App</h1>
-      <p>Please register or log in to access personalized content.</p>
-      <Link href="/registration">Register</Link>
+      <Header />
+      <div className="container mx-auto p-4">
+       
+      </div>
+     
     </div>
   );
 };
 
-export default HomePage;
+export default Home;
+

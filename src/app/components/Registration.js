@@ -12,31 +12,33 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
     try {
-      // Create user with email and password
+      
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
 
-      // Access the user from userCredential
+      
       const user = userCredential.user;
 
-      // Store additional user information in Firestore
+      
       await setDoc(doc(collection(db, "users"), user.uid), {
         name,
         email,
       });
       console.log("Success. The user is created in Firebase");
 
-      // You can redirect the user to a different page after successful registration
+      
       router.push("/login");
     } catch (error) {
+       setError(error.message);
       console.error("Registration failed", error.message);
     }
   };
@@ -47,7 +49,7 @@ const Register = () => {
         <img
           className="mx-auto h-10 w-auto"
           src="https://ninjasfiles.s3.amazonaws.com/asset_0000000000000030_1550710829_ninjasicon.png"
-          alt="Your Company"
+          alt="Coding ninjas"
         />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign up to your account
@@ -127,6 +129,9 @@ const Register = () => {
             </button>
           </div>
         </form>
+        {error && (
+          <p className="mt-4 text-center text-sm text-red-500">{error}</p>
+        )}
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Already have an account?{" "}

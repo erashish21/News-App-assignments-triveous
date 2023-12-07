@@ -8,17 +8,19 @@ const Login = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null); 
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      // Sign in user with email and password
+      
       await signInWithEmailAndPassword(auth, email, password);
 
-      // You can redirect the user to a different page after successful login
-      router.push("/dashboard"); // Change to the desired dashboard page
+      
+      router.push("/dashboard"); 
     } catch (error) {
+      setError(error.message);
       console.error("Login failed", error.message);
     }
   };
@@ -29,7 +31,7 @@ const Login = () => {
         <img
           className="mx-auto h-10 w-auto"
           src="https://ninjasfiles.s3.amazonaws.com/asset_0000000000000030_1550710829_ninjasicon.png"
-          alt="Your Company"
+          alt="coding ninjas"
         />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign in to your account
@@ -97,11 +99,14 @@ const Login = () => {
             </button>
           </div>
         </form>
+        {error && (
+          <p className="mt-4 text-center text-sm text-red-500">{error}</p>
+        )}
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Not a member?{" "}
           <a
-            href="#"
+            href="/registration"
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >
             sign up
